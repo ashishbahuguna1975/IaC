@@ -1,0 +1,31 @@
+{
+    "Name": "Automation Runbook Virtual Machine Start & Stop",
+    "IsCustom": true,
+    "Description": "Automation Runbook Virtual Machine Start & Stop",
+    "Actions": [
+        "Microsoft.Automation/automationAccounts/read",
+        "Microsoft.Automation/automationAccounts/variables/write",
+        "Microsoft.Automation/automationAccounts/schedules/write",	
+        "Microsoft.Automation/automationAccounts/runbooks/write",
+        "Microsoft.Automation/automationAccounts/connections/write",
+        "Microsoft.Automation/automationAccounts/certificates/write",	
+        "Microsoft.Automation/automationAccounts/modules/write",
+        "Microsoft.Automation/automationAccounts/modules/read",
+        "Microsoft.automation/automationAccounts/jobSchedules/write",
+        "Microsoft.Automation/automationAccounts/jobs/write",
+        "Microsoft.Automation/automationAccounts/jobs/read",
+        "Microsoft.OperationsManagement/solutions/write",
+        "Microsoft.OperationalInsights/workspaces/*",
+        "Microsoft.Insights/diagnosticSettings/write",
+        "Microsoft.Insights/ActionGroups/Write",
+        "Microsoft.Insights/ActionGroups/read",
+        "Microsoft.Resources/subscriptions/resourceGroups/read",
+        "Microsoft.Resources/deployments/*"
+    ],
+    "NotActions": [],
+    "DataActions": [],
+    "NotDataActions": [],
+    "AssignableScopes": [
+      "/providers/Microsoft.Management/managementGroups/Monitoring"
+    ]
+  }

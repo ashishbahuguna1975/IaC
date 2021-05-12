@@ -1,0 +1,44 @@
+{
+  "properties": {
+    "displayName": "Tagging: Apply Technical System Owner tag and its default value",
+    "type": "Microsoft.Authorization/policyDefinitions",
+    "name": "tagging-Technical-System-Owner-append",
+    "policyType": "Custom",
+    "description": "Applies the required Technical System Owner tag from the NS tagging schema with a default value if tag is not specified by the user.",
+    "metadata": {
+      "category": "New Signature DriveTrain"
+    },
+    "Mode": "Indexed",
+    "parameters": {
+      "tagName": {
+        "type": "String",
+        "defaultValue": "Technical System Owner",
+        "metadata": {
+          "description": "Name of the tag"
+        }
+      },
+      "defaultTagValue": {
+        "type": "String",
+        "defaultValue": "notset",
+        "metadata": {
+          "description": "Default value of the tag"
+        }
+      }
+    },
+    "policyRule": {
+      "if": {
+        "field": "[concat('tags[', parameters('tagName'), ']')]",
+        "exists": "false"
+      },
+      "then": {
+        "effect": "append",
+        "details": [
+          {
+            "field": "[concat('tags[', parameters('tagName'), ']')]",
+            "value": "[parameters('defaultTagValue')]"
+          }
+        ]
+      }
+    }
+  }
+}

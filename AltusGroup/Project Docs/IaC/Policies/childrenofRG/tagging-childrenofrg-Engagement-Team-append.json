@@ -1,0 +1,47 @@
+{
+    "properties": {
+      "displayName": "Tagging: Copy RG Engagement Team tag to child resources",
+      "name": "tagging-childrenofrg-Engagement-Team-append",
+      "mode": "Indexed",
+      "description": "Append the Engagement Team tag from the parent resource group to the resource if tag on RG is not 'notset' ",
+      "metadata": {
+        "category": "New Signature DriveTrain"
+      },
+      "parameters": {
+        "tagName": {
+          "type": "String",
+          "defaultValue": "Engagement Team",
+          "metadata": {
+            "description": "Name of the tag"
+          }
+        }
+      },
+      "policyRule": {
+        "if": {
+          "allOf": [
+            {
+              "field": "[concat('tags[', parameters('tagName'), ']')]",
+              "Equals": "notset"
+            },
+            {
+              "value": "[resourceGroup().tags[parameters('tagName')]]",
+              "exists": "true"
+            },
+            {
+              "value": "[resourceGroup().tags[parameters('tagName')]]",
+              "notEquals": "notset"
+            }
+          ]
+        },
+        "then": {
+          "effect": "append",
+          "details": [
+            {
+              "field": "[concat('tags[', parameters('tagName'), ']')]",
+              "value": "[resourceGroup().tags[parameters('tagName')]]"
+            }
+          ]
+        }
+      }
+    }
+  }

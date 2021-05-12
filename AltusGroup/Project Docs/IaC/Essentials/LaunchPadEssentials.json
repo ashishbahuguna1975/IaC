@@ -1,0 +1,349 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "networkResourceGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the resource group to create or resue for networking."
+      },
+      "defaultValue": ""
+    },
+    "sharedServicesResourceGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the resource group to create or resue for shared services."
+      },
+      "defaultValue": ""
+    },
+    "resourceLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    },
+    "tags": {
+      "type": "object",
+      "metadata": {
+        "description": "Object of tags to apply to resources to be created."
+      },
+      "defaultValue": {
+        "environment": "hub"
+      }
+    },
+    "recoveryServiceVaultName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for the Recovery Service Vault to be created."
+      }
+    },
+    "keyVaultName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for the Key Vault to be created."
+      }
+    },
+    "vnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the hub virtual network to be created."
+      }
+    },
+    "vpnGwName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for the VPN gateway"
+      }
+    },
+    "vpnGwSku": {
+      "type": "string",
+      "metadata": {
+        "description": "SKU for the VPN gateway"
+      }
+    },
+    "vpnGwIpName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for the VPN gateway's public IP"
+      }
+    },
+    "bastionIpName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for the Azure Bastion Public IP to be created."
+      }
+    },
+    "bastionName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for the Azure Bastion to be created."
+      }
+    },
+    "bastionNsgName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for the Azure Bastion NSG to be created."
+      }
+    },
+    "routeTableName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for the Azure Route Table to be created."
+      }
+    },
+    "workloadIpSubnetNsgName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for the Network Security Group to be attached to the Workload Subnet to be created."
+      }
+    },
+    "dnsForwarders": {
+      "type": "array",
+      "metadata": {
+        "description": "Values to be set as the default DNS servers for the virtual network to be created."
+      },
+      "defaultValue": [
+      ]
+    },
+    "vnetIpSpace": {
+      "type": "string",
+      "metadata": {
+        "description": "The IP Address Space (CIDR Block) for the virtual network to be created."
+      }
+    },
+    "workloadSubnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name for the Workload Subnet to be created."
+      }
+    },
+    "workloadIpSubnet": {
+      "type": "string",
+      "metadata": {
+        "description": "IP Address Space (CIDR Block) for the Workload Subnet to be created."
+      }
+    },
+    "bastionIpSubnet": {
+      "type": "string",
+      "metadata": {
+        "description": "IP Address Space (CIDR Block) for the Azure Bastion Subnet to be created."
+      }
+    },
+    "gatewayIpSubnet": {
+      "type": "string",
+      "metadata": {
+        "description": "IP Address Space (CIDR Block) for the Gateway Subnet to be created."
+      }
+    },
+    "deployRSVs": {
+      "type": "bool",
+      "defaultValue": true,
+      "metadata": {
+        "description": "Whether to deploy RSVs and Backup or not: Primarily used for pipeline testing"
+      }
+    },
+    "enableSecurityCenter": {
+      "type": "bool",
+      "metadata": {
+        "description": "Enable Azure Security Center : TRUE | FALSE"
+      },
+      "defaultValue": true
+    },
+    "ascResourceType": {
+      "type": "array",
+      "metadata": {
+        "description": "Resource-Specific Security Center Instances: See GET https://management.azure.com/subscriptions/{subscription-id}/providers/Microsoft.Security/pricings/?api-version=2018-06-01"
+      },
+      "defaultValue": [
+        "VirtualMachines",
+        "SqlServers",
+        "AppServices",
+        "StorageAccounts",
+        "SqlServerVirtualMachines",
+        "KubernetesService",
+        "ContainerRegistry",
+        "KeyVaults"
+      ]
+    },
+    "ascPricing": {
+      "type": "string",
+      "defaultValue": "Standard",
+      "metadata": {
+        "description": "Enable Azure Security Center Tier : Standard | Free."
+      },
+      "allowedValues": [
+        "Standard",
+        "Free"
+      ]
+    },
+    "ascLogAnalyticsWorkspaceId": {
+      "type": "string",
+      "metadata": {
+        "description": "Optional property to enable ASC <-> Log Analytics integration. Resource ID of workspace to enable ASC integration for this subscription"
+      },
+      "defaultValue": ""
+    }
+  },
+  "variables": {
+    "SAStoken": "[concat('?',split(deployment().properties.templateLink.uri,'?')[1])]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2018-05-01",
+      "location": "[parameters('resourceLocation')]",
+      "name": "[parameters('networkResourceGroupName')]",
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "apiVersion": "2018-05-01",
+      "location": "[parameters('resourceLocation')]",
+      "name": "[parameters('sharedServicesResourceGroupName')]",
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-10-01",
+      "name": "[concat('ascDeploy','-',uniquestring(subscription().Id))]",
+      "location": "[parameters('resourceLocation')]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(uri(deployment().properties.templateLink.uri,'securitycenter.json'), variables('SAStoken'))]"
+        },
+        "parameters": {
+          "enableSecurityCenter": {
+            "value": "[parameters('enableSecurityCenter')]"
+          },
+          "ascResourceType": {
+            "value": "[parameters('ascResourceType')]"
+          },
+          "ascPricing": {
+            "value": "[parameters('ascPricing')]"
+          },
+          "ascLogAnalyticsWorkspaceId": {
+            "value": "[parameters('ascLogAnalyticsWorkspaceId')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "BasicProdNetwork",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/resourceGroups',parameters('networkResourceGroupName'))]"
+      ],
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "resourceGroup": "[parameters('networkResourceGroupName')]",
+      "properties": {
+        "templateLink": {
+          "uri": "[concat(uri(deployment().properties.templateLink.uri,'essentialsvnet.json'), variables('SAStoken'))]"
+        },
+        "parameters": {
+          "tags": {
+            "value": "[parameters('tags')]"
+          },
+          "vnetName": {
+            "value": "[parameters('vnetName')]"
+          },
+          "dnsForwarders": {
+            "value": "[parameters('dnsForwarders')]"
+          },
+          "vpnGwName": {
+            "value": "[parameters('vpnGwName')]"
+          },
+          "vpnGwSku": {
+            "value": "[parameters('vpnGwSku')]"
+          },
+          "vpnGwIpName": {
+            "value": "[parameters('vpnGwIpName')]"
+          },
+          "bastionIpName": {
+            "value": "[parameters('bastionIpName')]"
+          },
+          "routeTableName": {
+            "value": "[parameters('routeTableName')]"
+          },
+          "vnetIpSpace": {
+            "value": "[parameters('vnetIpSpace')]"
+          },
+          "workloadSubnetName": {
+            "value": "[parameters('workloadSubnetName')]"
+          },
+          "workloadIpSubnet": {
+            "value": "[parameters('workloadIpSubnet')]"
+          },
+          "workloadIpSubnetNsgName": {
+            "value": "[parameters('workloadIpSubnetNsgName')]"
+          },
+          "bastionIpSubnet": {
+            "value": "[parameters('bastionIpSubnet')]"
+          },
+          "bastionName": {
+            "value": "[parameters('bastionName')]"
+          },
+          "bastionNsgName": {
+            "value": "[parameters('bastionNsgName')]"
+          },
+          "gatewayIpSubnet": {
+            "value": "[parameters('gatewayIpSubnet')]"
+          }
+        },
+        "mode": "Incremental",
+        "debugSetting": {
+          "detailLevel": "none"
+        }
+      }
+    },
+    {
+      "name": "KeyVaultCore",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/resourceGroups',parameters('sharedServicesResourceGroupName'))]"
+      ],
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "resourceGroup": "[parameters('sharedServicesResourceGroupName')]",
+      "properties": {
+        "templateLink": {
+          "uri": "[concat(uri(deployment().properties.templateLink.uri,'KeyVault.json'), variables('SAStoken'))]"
+        },
+        "parameters": {
+          "keyVaultName": {
+            "value": "[parameters('keyVaultName')]"
+          }
+        },
+        "mode": "Incremental",
+        "debugSetting": {
+          "detailLevel": "none"
+        }
+      }
+    },
+    {
+      "name": "RecoveryServiceVaultCore",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/resourceGroups',parameters('sharedServicesResourceGroupName'))]"
+      ],
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2018-05-01",
+      "condition": "[parameters('deployRSVs')]",
+      "resourceGroup": "[parameters('sharedServicesResourceGroupName')]",
+      "properties": {
+        "templateLink": {
+          "uri": "[concat(uri(deployment().properties.templateLink.uri,'RecoveryServiceVault.json'), variables('SAStoken'))]"
+        },
+        "parameters": {
+          "vaultName": {
+            "value": "[parameters('recoveryServiceVaultName')]"
+          }
+        },
+        "mode": "Incremental",
+        "debugSetting": {
+          "detailLevel": "none"
+        }
+      }
+    }
+  ],
+  "outputs": {
+  }
+}

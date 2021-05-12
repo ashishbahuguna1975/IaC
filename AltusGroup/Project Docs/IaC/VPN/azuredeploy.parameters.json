@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vpnType": {
+      "value": "RouteBased"
+    },
+    "virtualNetworkName": {
+      "value": "VNET-NL-EUW-PRD-HUB"
+    },
+    "gatewayPublicIPName": {
+      "value": "PIP-VNG-NL-EUW-PRD-HUB01"
+    },
+    "gatewayName": {
+      "value": "VNG-NL-EUW-PRD-HUB01"
+    },
+    "gatewaySku": {
+      "value": "VpnGw1"
+    },
+    "localGatewayName": {
+      "value": "LNG-NL-EUW-PRD-HUB01"
+    },
+    "localGatewayIpAddress": {
+      "value": "185.58.91.30"
+    },
+    "localNetworkAddressPrefix": {
+      "value": ["10.16.0.0/12","10.32.0.0/11","10.64.0.0/11","10.96.0.0/11","10.128.0.0/11","10.160.0.0/11","10.192.0.0/11","10.224.0.0/11","192.168.32.0/19"]
+    },
+    "vpnPSK": {
+      "value": ".m8EE^8#[;MhdP9<.u}"
+    }
+  }
+}

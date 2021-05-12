@@ -1,0 +1,119 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "enableSecurityCenter": {
+      "type": "bool",
+      "metadata": {
+        "description": "Enable Azure Security Center : TRUE | FALSE"
+      },
+      "defaultValue": true
+    },
+    "ascResourceType": {
+      "type": "array",
+      "metadata": {
+        "description": "Resource-Specific Security Center Instances: See GET https://management.azure.com/subscriptions/{subscription-id}/providers/Microsoft.Security/pricings/?api-version=2018-06-01"
+      },
+      "defaultValue": [
+        "VirtualMachines",
+        "SqlServers",
+        "AppServices",
+        "StorageAccounts",
+        "SqlServerVirtualMachines",
+        "KubernetesService",
+        "ContainerRegistry",
+        "KeyVaults"
+      ]
+    },
+    "ascPricing": {
+      "type": "string",
+      "defaultValue": "Standard",
+      "metadata": {
+        "description": "Enable Azure Security Center Tier : Standard | Free."
+      },
+      "allowedValues": [
+        "Standard",
+        "Free"
+      ]
+    },
+    "ascLogAnalyticsWorkspaceId": {
+      "type": "string",
+      "metadata": {
+        "description": "Optional property to enable ASC <-> Log Analytics integration. Resource ID of workspace to enable ASC integration for this subscription"
+      },
+      "defaultValue":""
+    }
+  },
+  "variables": {
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Security/pricings",
+      "condition": "[parameters('enableSecurityCenter')]",
+      "apiVersion": "2018-06-01",
+      "name": "[parameters('ascResourceType')[copyIndex()]]",
+      "properties": {
+        "pricingTier": "[parameters('ascPricing')]"
+      },
+      "copy": {
+        "name": "ResourceTypeCopy",
+        "count": "[length(parameters('ascResourceType'))]",
+        "mode": "serial"
+      }
+    },
+    {
+      "type": "Microsoft.Security/workspaceSettings",
+      "condition": "[if(empty(parameters('asclogAnalyticsWorkspaceId')), bool('false'), bool('true'))]",
+      "apiVersion": "2017-08-01-preview",
+      "name": "default",
+      "properties": {
+        "workspaceId": "[parameters('asclogAnalyticsWorkspaceId')]",
+        "scope": "[subscription().id]"
+      }
+    },
+    {
+      "type": "Microsoft.Security/autoProvisioningSettings",
+      "name": "default",
+      "apiVersion": "2017-08-01-preview",
+      "properties": {
+        "autoProvision": "On"
+      }
+    },
+    {
+      "type": "Microsoft.Security/policies",
+      "apiVersion": "2015-06-01-preview",
+      "name": "default",
+      "condition": "[parameters('enableSecurityCenter')]",
+      "properties": {
+        "policyLevel": "Subscription",
+        "name": "default",
+        "unique": "Off",
+        "logCollection": "Off",
+        "recommendations": {
+          "patch": "On",
+          "baseline": "On",
+          "antimalware": "On",
+          "diskEncryption": "On",
+          "acls": "On",
+          "nsgs": "On",
+          "waf": "On",
+          "sqlAuditing": "On",
+          "sqlTde": "On",
+          "ngfw": "On",
+          "vulnerabilityAssessment": "On",
+          "storageEncryption": "On",
+          "jitNetworkAccess": "On"
+        },
+        "securityContactConfiguration": {
+          "areNotificationsOn": true,
+          "sendToAdminOn": true
+        },
+        "pricingConfiguration": {
+          "selectedPricingTier": "[parameters('ascPricing')]"
+        }
+      }
+    }
+  ],
+  "outputs": {
+  }
+}

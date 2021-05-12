@@ -1,0 +1,47 @@
+{
+    "properties": {
+      "displayName": "Tagging: Copy RG DR Schedule tag to child resources",
+      "name": "tagging-childrenofrg-DR-Schedule-append",
+      "mode": "Indexed",
+      "description": "Append the DR Schedule tag from the parent resource group to the resource if tag on RG is not 'notset' ",
+      "metadata": {
+        "category": "New Signature DriveTrain"
+      },
+      "parameters": {
+        "tagName": {
+          "type": "String",
+          "defaultValue": "DR Schedule",
+          "metadata": {
+            "description": "Name of the tag"
+          }
+        }
+      },
+      "policyRule": {
+        "if": {
+          "allOf": [
+            {
+              "field": "[concat('tags[', parameters('tagName'), ']')]",
+              "Equals": "notset"
+            },
+            {
+              "value": "[resourceGroup().tags[parameters('tagName')]]",
+              "exists": "true"
+            },
+            {
+              "value": "[resourceGroup().tags[parameters('tagName')]]",
+              "notEquals": "notset"
+            }
+          ]
+        },
+        "then": {
+          "effect": "append",
+          "details": [
+            {
+              "field": "[concat('tags[', parameters('tagName'), ']')]",
+              "value": "[resourceGroup().tags[parameters('tagName')]]"
+            }
+          ]
+        }
+      }
+    }
+  }

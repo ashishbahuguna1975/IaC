@@ -1,0 +1,6 @@
+{
+    "listOfAllowedLocations": 
+    {
+        "value": ["CanadaCentral", "CanadaEast","EastUS"]
+    }
+}

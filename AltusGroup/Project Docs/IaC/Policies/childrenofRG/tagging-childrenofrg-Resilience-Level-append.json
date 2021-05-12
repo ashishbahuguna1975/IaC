@@ -1,0 +1,47 @@
+{
+    "properties": {
+      "displayName": "Tagging: Copy RG Resilience Level tag to child resources",
+      "name": "tagging-childrenofrg-Resilience-Level-append",
+      "mode": "Indexed",
+      "description": "Append the Resilience Level tag from the parent resource group to the resource if tag on RG is not 'notset' ",
+      "metadata": {
+        "category": "New Signature DriveTrain"
+      },
+      "parameters": {
+        "tagName": {
+          "type": "String",
+          "defaultValue": "Resilience Level",
+          "metadata": {
+            "description": "Name of the tag"
+          }
+        }
+      },
+      "policyRule": {
+        "if": {
+          "allOf": [
+            {
+              "field": "[concat('tags[', parameters('tagName'), ']')]",
+              "Equals": "notset"
+            },
+            {
+              "value": "[resourceGroup().tags[parameters('tagName')]]",
+              "exists": "true"
+            },
+            {
+              "value": "[resourceGroup().tags[parameters('tagName')]]",
+              "notEquals": "notset"
+            }
+          ]
+        },
+        "then": {
+          "effect": "append",
+          "details": [
+            {
+              "field": "[concat('tags[', parameters('tagName'), ']')]",
+              "value": "[resourceGroup().tags[parameters('tagName')]]"
+            }
+          ]
+        }
+      }
+    }
+  }

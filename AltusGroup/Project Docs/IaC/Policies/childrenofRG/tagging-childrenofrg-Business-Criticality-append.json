@@ -1,0 +1,47 @@
+{
+    "properties": {
+      "displayName": "Tagging: Copy RG Business Criticality tag to child resources",
+      "name": "tagging-childrenofrg-Business-Criticality-append",
+      "mode": "Indexed",
+      "description": "Append the Business Criticality tag from the parent resource group to the resource if tag on RG is not 'notset' ",
+      "metadata": {
+        "category": "New Signature DriveTrain"
+      },
+      "parameters": {
+        "tagName": {
+          "type": "String",
+          "defaultValue": "Business Criticality",
+          "metadata": {
+            "description": "Name of the tag"
+          }
+        }
+      },
+      "policyRule": {
+        "if": {
+          "allOf": [
+            {
+              "field": "[concat('tags[', parameters('tagName'), ']')]",
+              "Equals": "notset"
+            },
+            {
+              "value": "[resourceGroup().tags[parameters('tagName')]]",
+              "exists": "true"
+            },
+            {
+              "value": "[resourceGroup().tags[parameters('tagName')]]",
+              "notEquals": "notset"
+            }
+          ]
+        },
+        "then": {
+          "effect": "append",
+          "details": [
+            {
+              "field": "[concat('tags[', parameters('tagName'), ']')]",
+              "value": "[resourceGroup().tags[parameters('tagName')]]"
+            }
+          ]
+        }
+      }
+    }
+  }

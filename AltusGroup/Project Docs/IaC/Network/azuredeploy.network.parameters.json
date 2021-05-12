@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vnetname": {
+      "value": "VN-HUB-PUB-P-NL-01"
+    },
+    "location": {
+      "value": "westeurope"
+    },
+    "UDRName1": {
+      "value": "RT-PZ-Default"
+    },
+    "NSGName1": {
+      "value": "NSG-SN-HUB-VPN-P-NL-01"
+    },
+    "NSGName2": {
+      "value": "NSG-SN-HUB-MGMT-P-NL-01"
+    },
+    "UDRName2": {
+      "value": "RT-VN-HUB-PUB-P-NL-01-MerakiSubnet"
+    },
+    "UDR_NSG_RGName": {
+      "value": "RG-HUB-NET-P-01"
+    }
+  }
+}

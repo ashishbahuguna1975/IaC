@@ -1,0 +1,21 @@
+{
+    "properties": {
+        "roleName": "Auditor",
+        "description": "Reader access only",
+        "assignableScopes": [
+            "/providers/Microsoft.Management/managementGroups/Monitoring"
+            ],
+        "permissions": [
+            {
+                "actions": [
+                    "*/Read"
+                    ],
+                "notActions": [
+                   
+                ],
+                "dataActions": [],
+                "notDataActions": []
+            }
+        ]
+    }
+}

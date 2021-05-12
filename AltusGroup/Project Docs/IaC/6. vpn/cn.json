@@ -1,0 +1,46 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vngName": {
+            "type": "string"
+        },
+        "lngName": {
+            "type": "string"
+        },
+        "lngRgName": {
+            "type": "string"
+        },
+         "cnName": {
+            "type": "string"
+        },
+        "sharedSecret": {
+            "type": "securestring"
+        }
+    },
+    "variables":{
+        "lngId": "[resourceId(parameters('lngRgName'),'Microsoft.Network/localNetworkGateways', parameters('lngName') )]",
+        "vngId": "[resourceId('Microsoft.Network/virtualNetworkGateways', parameters('vngName') )]"
+        },
+    "resources": [
+        {
+            "name": "[parameters('cnName')]",
+            "type": "Microsoft.Network/connections",
+            "apiVersion": "2019-11-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "connectionType": "IPsec",
+                //"enableBgp": true, 
+                "connectionProtocol": "IKEv2",
+                "virtualNetworkGateway1": {
+                    "id": "[variables('vngId')]"
+                },
+                "sharedKey": "[parameters('sharedSecret')]",
+                "localNetworkGateway2": {
+                    "id": "[variables('lngId')]"
+                }
+            },
+            "dependsOn": [] 
+        }
+    ]
+}

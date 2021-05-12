@@ -1,0 +1,122 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "networkResourceGroupName": {
+      "value": "lzessentialsnet9c43ec65"
+    },
+    "sharedServicesResourceGroupName": {
+      "value": "lzessentialsss9c43ec65"
+    },
+    "resourceLocation": {
+      "value": "westeurope"
+    },
+    "tags": {
+      "value": {
+        "environment": "landingzone"
+      }
+    },
+    "adminUsername": {
+      "value": "adAdmin"
+    },
+    "adminPassword": {
+      "value": "ilov3ch33z3!"
+    },
+    "domainName": {
+      "value": "launchpad.local"
+    },
+    "dc1Name": {
+      "value": "dc1"
+    },
+    "dc2Name": {
+      "value": "dc2"
+    },
+    "adAvailabilitySetName": {
+      "value": "avsAd"
+    },
+    "osVersion": {
+      "value": "2019-Datacenter"
+    },
+    "dcVmSize": {
+      "value": "Standard_DS2_v2"
+    },
+    "recoveryServiceVaultName": {
+      "value": "rsv9c43ec65"
+    },
+    "keyVaultName": {
+      "value": "keyvault9c43ec65"
+    },
+    "vnetName": {
+      "value": "vnet9c43ec65"
+    },
+    "vpnGwName": {
+      "value": "vpngw9c43ec65"
+    },
+    "vpnGwSku": {
+      "value": "Standard"
+    },
+    "vpnGwIpName": {
+      "value": "vpn9c43ec65"
+    },
+    "bastionIpName": {
+      "value": "bastion9c43ec65"
+    },
+    "bastionName": {
+        "value": "AzureBastion"
+    },
+    "bastionNsgName": {
+        "value": "AzureBastion"
+    },
+    "routeTableName": {
+      "value": "routetable9c43ec65"
+    },
+    "workloadSubnetName": {
+      "value": "workload9c43ec65"
+    },
+    "workloadIpSubnetNsgName": {
+      "value": "workload9c43ec65"
+    },
+    "dnsForwarders": {
+      "value": []
+    },
+    "vnetIpSpace": {
+      "value": "10.0.0.0/24"
+    },
+    "workloadIpSubnet": {
+      "value": "10.0.0.0/25"
+    },
+    "bastionIpSubnet": {
+      "value": "10.0.0.192/27"
+    },
+    "gatewayIpSubnet": {
+      "value": "10.0.0.224/27"
+    },
+    "deployRSVs": {
+      "value": false
+    },
+    "deployADDS": {
+        "value": true
+    },
+    "enableSecurityCenter": {
+      "value": true
+    },
+    "ascResourceType": {
+      "value": [
+        "VirtualMachines",
+        "SqlServers",
+        "AppServices",
+        "StorageAccounts",
+        "SqlServerVirtualMachines",
+        "KubernetesService",
+        "ContainerRegistry",
+        "KeyVaults"
+      ]
+    },
+    "ascPricing": {
+      "value": "Standard"
+    },
+    "ascLogAnalyticsWorkspaceId": {
+      "value": ""
+    }
+  }
+}

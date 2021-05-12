@@ -1,0 +1,23 @@
+{
+    "properties": {
+        "roleName": "Security Operator",
+        "description": "Reader rights and administrative rights to Sentinel and Azure Security Center",
+        "assignableScopes": [
+            "/providers/Microsoft.Management/managementGroups/Monitoring"
+            ],
+        "permissions": [
+            {
+                "actions": [
+                    "*/Read",
+                    "Microsoft.SecurityGraph/*",
+                    "Microsoft.Security/*"
+                    ],
+                "notActions": [
+                    
+                ],
+                "dataActions": [],
+                "notDataActions": []
+            }
+        ]
+    }
+}

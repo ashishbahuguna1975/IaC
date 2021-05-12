@@ -1,0 +1,50 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vaultName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name to assign to the Vault"
+      }
+    },
+    "vaultStorageType": {
+      "type": "string",
+      "defaultValue": "GloballyRedundant",
+      "allowedValues": [
+        "LocallyRedundant",
+        "GloballyRedundant"
+      ],
+      "metadata": {
+        "description": "Change Vault Storage Type (can only be done prior to first use)"
+      }
+    }
+  },
+  "variables": { },
+  "resources": [
+    {
+      "type": "Microsoft.RecoveryServices/vaults",
+      "apiVersion": "2018-01-10",
+      "name": "[parameters('vaultName')]",
+      "location": "[resourceGroup().location]",
+      "sku": {
+        "name": "RS0",
+        "tier": "Standard"
+      },
+      "properties": { }
+    },
+    {
+      "condition": "[equals(parameters('vaultStorageType'),'LocallyRedundant')]",
+      "type": "Microsoft.RecoveryServices/vaults/backupstorageconfig",
+      "name": "[concat(parameters('vaultName'), '/vaultstorageconfig')]",
+      "apiVersion": "2018-01-10",
+      "dependsOn": [
+          "[resourceId('Microsoft.RecoveryServices/vaults/', parameters('vaultName'))]"
+      ],
+      "properties": {
+          "StorageModelType":"[parameters('vaultStorageType')]"
+      }
+    }
+  ],
+  "outputs": { }
+}

@@ -1,0 +1,19 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vngName": {
+            "value": "vngw-prod"
+        },
+        "lngName": {
+            "value": "lngw-calgary-prod"
+        },
+        "lngRgName": { "value":"rg-network-prod"},
+        "cnName": {
+            "value": "cn-calgary-prod"
+        },
+        "sharedSecret": {
+            "value": "fromAdoVariable"
+        }
+    }
+}

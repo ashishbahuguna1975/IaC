@@ -1,0 +1,15 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "existingVNETName": {
+      "value": "VN-TEST-PRV-T-NL-01"
+    },
+    "newSubnetName": {
+      "value": "SN-TEST-MI-T-NL-01"
+    },
+    "newSubnetAddressPrefix": {
+      "value": "10.20.41.0/26"
+    }
+  }
+}

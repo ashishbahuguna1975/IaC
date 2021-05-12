@@ -1,0 +1,162 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vpnType": {
+      "type": "string",
+      "metadata": {
+        "description": "Route based or policy based"
+      },
+      "defaultValue": "RouteBased",
+      "allowedValues": [
+        "RouteBased",
+        "PolicyBased"
+      ]
+    },
+    "virtualNetworkName": {
+      "type": "string",
+      "defaultValue": "vnet-euw-prd-hub",
+      "metadata": {
+        "description": "Arbitrary name for the Azure Virtual Network"
+      }
+    },
+    "gatewayPublicIPName": {
+      "type": "string",
+      "defaultValue": "pip-euw-pr-gw01",
+      "metadata": {
+        "description": "Arbitrary name for public IP resource used for the new azure gateway"
+      }
+    },
+    "gatewayName": {
+      "type": "string",
+      "defaultValue": "gw-euw-prd-hub",
+      "metadata": {
+        "description": "Arbitrary name for the new gateway"
+      }
+    },
+    "gatewaySku": {
+      "type": "string",
+      "defaultValue": "VpnGw1",
+      "allowedValues": [
+        "Basic",
+        "VpnGw1",
+        "VpnGw2",
+        "VpnGw3",
+        "VpnGw1AZ",
+        "VpnGw2AZ",
+        "VpnGw3AZ"
+      ],
+      "metadata": {
+        "description": "The Sku of the Gateway. This must be one of Basic, VpnGw[1-3] or VpnGw[1-3]AZ."
+      }
+    },
+    "localGatewayName": {
+      "type": "string",
+      "defaultValue": "gw-euw-prd-hub-localGateway",
+      "metadata": {
+        "description": "Arbitrary name for gateway resource representing a remote VPN endpoint's details"
+      }
+    },
+    "localGatewayIpAddress": {
+      "type": "string",
+      "metadata": {
+        "description": "Public IP of your remote VPN endpoint"
+      }
+    },
+    "localNetworkAddressPrefix": {
+      "type": "array",
+      "defaultValue": [
+        "10.0.0.0/8"
+      ],
+      "metadata": {
+        "description": "CIDR block representing the address space of the remote end's network subnet"
+      }
+    },
+    "vpnPSK": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Pre-Shared Key (PSK) for the VPN Connection"
+      }
+    }
+  },
+  "variables": {
+    "gatewaySubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', parameters('virtualNetworkName'),'GatewaySubnet')]"
+  },
+  "resources": [
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[parameters('gatewayPublicIPName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic"
+      }
+    },
+    {
+      "apiVersion": "2018-07-01",
+      "type": "Microsoft.Network/virtualNetworkGateways",
+      "name": "[parameters('gatewayName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/publicIPAddresses', parameters('gatewayPublicIPName'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "[variables('gatewaySubnetRef')]"
+              },
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('gatewayPublicIPName'))]"
+              }
+            },
+            "name": "vnetGatewayConfig"
+          }
+        ],
+        "sku": {
+          "name": "[parameters('gatewaySku')]",
+          "tier": "[parameters('gatewaySku')]"
+        },
+        "gatewayType": "Vpn",
+        "vpnType": "[parameters('vpnType')]",
+        "enableBgp": "false"
+      }
+    },
+    {
+      "apiVersion": "2018-07-01",
+      "type": "Microsoft.Network/localNetworkGateways",
+      "name": "[parameters('localGatewayName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "localNetworkAddressSpace": {
+          "addressPrefixes": "[parameters('localNetworkAddressPrefix')]"
+        },
+        "gatewayIpAddress": "[parameters('localGatewayIpAddress')]"
+      }
+    },
+    {
+      "type": "Microsoft.Network/connections",
+      "apiVersion": "2019-04-01",
+      "name": "[parameters('localGatewayName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworkGateways', parameters('gatewayName'))]",
+        "[resourceId(resourceGroup().name, 'Microsoft.Network/localNetworkGateways', parameters('localGatewayName'))]"
+      ],
+      "tags": {},
+      "properties": {
+        "virtualNetworkGateway1": {
+          "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworkGateways', parameters('gatewayName'))]"
+        },
+        "localNetworkGateway2": {
+          "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/localNetworkGateways', parameters('localGatewayName'))]"
+        },
+        "connectionType": "IPsec",
+        "routingWeight": 10,
+        "sharedKey": "[parameters('vpnPSK')]"
+      }
+    }
+  ]
+}

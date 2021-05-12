@@ -1,0 +1,63 @@
+{
+    "properties": {
+        "roleName": "Advanced User",
+        "description": "Full Agile user with Contributor access and safety barriers",
+        "assignableScopes": [
+            "/providers/Microsoft.Management/managementGroups/Monitoring"
+            ],
+        "permissions": [
+            {
+                "actions": [
+                    "*"
+                    ],
+                "notActions": [
+                    "Microsoft.Authorization/*/Delete",
+    "Microsoft.Authorization/*/Write",
+    "Microsoft.Authorization/ElevateAccess/Action",
+    "Microsoft.Cache/Redis/FirewallRules/Delete",
+    "Microsoft.Cache/Redis/FirewallRules/Write",
+    "Microsoft.ClassicCompute/VirtualMachines/NetworkInterfaces/AssociatedNetworkSecurityGroups/Delete",
+    "Microsoft.Compute/Disks/BeginGetAccess/Action",
+    "Microsoft.Compute/Snapshots/BeginGetAccess/Action",
+    "Microsoft.ContainerRegistry/Registries/Write",
+    "Microsoft.DataLakeAnalytics/Accounts/FirewallRules/Delete",
+    "Microsoft.DataLakeAnalytics/Accounts/FirewallRules/Write",
+    "Microsoft.DataLakeStore/Accounts/FirewallRules/Delete",
+    "Microsoft.DataLakeStore/Accounts/FirewallRules/Write",
+    "Microsoft.DBforMySQL/Servers/FirewallRules/Delete",
+    "Microsoft.DBforMySQL/Servers/FirewallRules/Write",
+    "Microsoft.DBforMariaDB/Servers/FirewallRules/Delete",
+    "Microsoft.DBforMariaDB/Servers/FirewallRules/Write",
+    "Microsoft.DBforPostgreSQL/Servers/FirewallRules/Delete",
+    "Microsoft.DBforPostgreSQL/Servers/FirewallRules/Write",
+    "Microsoft.DBforPostgreSQL/Serversv2/FirewallRules/Delete",
+    "Microsoft.DBforPostgreSQL/Serversv2/FirewallRules/Write",
+    "Microsoft.EventHub/Namespaces/IpFilterRules/Delete",
+    "Microsoft.EventHub/Namespaces/IpFilterRules/Write",
+    "Microsoft.KeyVault/Vaults/Write",
+    "Microsoft.KeyVault/Vaults/EventGridFilters/Write",
+    "Microsoft.Network/*/Write",
+    "Microsoft.Network/ApplicationGatewayWebApplicationFirewallPolicies/Write",
+    "Microsoft.Network/AzureFirewalls/Write",
+    "Microsoft.Network/PublicIPAddresses/Write",
+    "Microsoft.Network/RouteTables/Routes/Write",
+    "Microsoft.Network/RouteTables/Write",
+    "Microsoft.Network/VirtualNetworks/Write",
+    "Microsoft.Network/NetworkSecurityGroups/Write",
+    "Microsoft.RecoveryServices/Vaults/BackupFabrics/ProtectionContainers/ProtectedItems/RecoveryPoints/Restore/Action",
+    "Microsoft.Security/webApplicationFirewalls/delete",
+    "Microsoft.ServiceBus/Namespaces/IpFilterRules/Delete",
+    "Microsoft.ServiceBus/Namespaces/IpFilterRules/Write",
+    "Microsoft.ServiceBus/Namespaces/Networkrulesets/Delete",
+    "Microsoft.ServiceBus/Namespaces/Networkruleset/Write",
+    "Microsoft.ServiceBus/Namespaces/Queues/AuthorizationRules/Delete",
+    "Microsoft.Sql/Servers/FirewallRules/Delete",
+    "Microsoft.Sql/Servers/FirewallRules/Write",
+    "Microsoft.Web/HostingEnvironments/MultiRolePools/Write"
+                ],
+                "dataActions": [],
+                "notDataActions": []
+            }
+        ]
+    }
+}

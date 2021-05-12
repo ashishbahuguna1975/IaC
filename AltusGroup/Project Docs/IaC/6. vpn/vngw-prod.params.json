@@ -1,0 +1,37 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "value": "vngw-prod"
+        },
+        "sku": {
+            "value": "VpnGw1"
+        },
+        "gatewayType": {
+            "value": "Vpn"
+        },
+        "vpnType": {
+            "value": "RouteBased"
+        },
+        "vpnGatewayGeneration": {
+            "value": "Generation1"
+        },
+        "newPublicIpAddressName": {
+            "value": "pip-vngw-prod"
+        },
+        "PIPAllocationMethod": { "value":"Static"},
+        "PIPSKU": { "value":"Standard"},
+        "enableBgp": {
+            "value": false
+        },
+        "activeActive": {
+            "value": false
+        },
+        "asn": {
+            "value": 0
+        },
+        "vnetName":   {"value": "vnet-prod" },
+        "vnetRgName": {"value": "rg-network-prod" }
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualNetworkResourceGroupName": {
+            "value": "RG-NL-EUN-PRD-ITS-NETWORKING" 
+        },
+        "virtualNetworkName": {
+            "value": "VNET-NL-EUN-PRD-ITS" 
+        },
+        "subnetName": {
+            "value": "SN-VDI"
+        },
+        "NetworkSecurityGroupName": {
+            "value": "NSG-NL-EUN-PRD-ITS-VDI" 
+        },
+        "location": {
+            "value": "North Europe" 
+        },
+        "_artifactsLocation": {
+            "value": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-nsg-add-to-existing-subnet/"
+        },
+        "_artifactsLocationSasToken": {
+            "value": ""
+        }
+    }
+}

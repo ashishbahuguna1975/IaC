@@ -1,0 +1,718 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "UDRName1": {
+      "defaultValue": "RT-PZ-Default",
+      "type": "String"
+    },
+    "NSGName1": {
+      "defaultValue": "NSG-SN-HUB-VPN-P-NL-01",
+      "type": "String"
+    },
+    "NSGName2": {
+      "defaultValue": "NSG-SN-HUB-MGMT-P-NL-01",
+      "type": "String"
+    },
+    "UDRName2": {
+      "defaultValue": "RT-VN-HUB-PUB-P-NL-01-MerakiSubnet",
+      "type": "String"
+    },
+    "location": {
+      "defaultValue": "westeurope",
+      "type": "String"
+    }
+  },
+    "variables": {},
+    "resources": [
+      {
+        "type": "Microsoft.Network/networkSecurityGroups",
+        "apiVersion": "2020-05-01",
+        "name": "[parameters('NSGName2')]",
+        "location": "[parameters('location')]",
+        "properties": {
+          "securityRules": []
+        }
+      },
+      {
+        "type": "Microsoft.Network/networkSecurityGroups",
+        "apiVersion": "2020-05-01",
+        "name": "[parameters('NSGName1')]",
+        "location": "[parameters('location')]",
+        "properties": {
+          "securityRules": []
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables",
+        "apiVersion": "2020-05-01",
+        "name": "[parameters('UDRName1')]",
+        "location": "[parameters('location')]",
+        "properties": {
+          "disableBgpRoutePropagation": false,
+          "routes": [
+            {
+              "name": "Default",
+              "properties": {
+                "addressPrefix": "0.0.0.0/0",
+                "nextHopType": "Internet"
+              }
+            },
+            {
+              "name": "Onprem1",
+              "properties": {
+                "addressPrefix": "10.100.0.0/16",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "Onprem2",
+              "properties": {
+                "addressPrefix": "10.16.1.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "Onprem3",
+              "properties": {
+                "addressPrefix": "10.16.4.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "Onprem4",
+              "properties": {
+                "addressPrefix": "10.16.2.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "Onprem5",
+              "properties": {
+                "addressPrefix": "10.16.3.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "Onprem6",
+              "properties": {
+                "addressPrefix": "10.16.5.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "Onprem7",
+              "properties": {
+                "addressPrefix": "10.16.6.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "Onprem8",
+              "properties": {
+                "addressPrefix": "10.16.7.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "Onprem9",
+              "properties": {
+                "addressPrefix": "10.16.8.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "Onprem10",
+              "properties": {
+                "addressPrefix": "10.16.9.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "Onprem11",
+              "properties": {
+                "addressPrefix": "10.16.10.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "Onprem12",
+              "properties": {
+                "addressPrefix": "10.16.11.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "Onprem13",
+              "properties": {
+                "addressPrefix": "10.16.12.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "Onprem14",
+              "properties": {
+                "addressPrefix": "10.16.13.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "Onprem15",
+              "properties": {
+                "addressPrefix": "10.16.14.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "Onprem16",
+              "properties": {
+                "addressPrefix": "10.24.2.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "Onprem17",
+              "properties": {
+                "addressPrefix": "10.24.53.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "Onprem18",
+              "properties": {
+                "addressPrefix": "10.24.54.0/24",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "Onprem19",
+              "properties": {
+                "addressPrefix": "10.128.0.0/9",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "OnPrem20",
+              "properties": {
+                "addressPrefix": "10.64.0.0/10",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "OnPrem21",
+              "properties": {
+                "addressPrefix": "10.32.0.0/11",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "OnPrem22",
+              "properties": {
+                "addressPrefix": "10.24.0.0/13",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "OnPrem23",
+              "properties": {
+                "addressPrefix": "10.22.0.0/15",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "OnPrem24",
+              "properties": {
+                "addressPrefix": "10.16.0.0/14",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            },
+            {
+              "name": "OnPrem25",
+              "properties": {
+                "addressPrefix": "10.0.0.0/12",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.60.4"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables",
+        "apiVersion": "2020-05-01",
+        "name": "[parameters('UDRName2')]",
+        "location": "[parameters('location')]",
+        "properties": {
+          "disableBgpRoutePropagation": false,
+          "routes": [
+            {
+              "name": "CiscoMeraki",
+              "properties": {
+                "addressPrefix": "10.20.0.0/20",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.61.4"
+              }
+            },
+            {
+              "name": "ProdVnet",
+              "properties": {
+                "addressPrefix": "10.20.16.0/20",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.61.4"
+              }
+            },
+            {
+              "name": "MerakiToFW",
+              "properties": {
+                "addressPrefix": "10.20.60.0/22",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.61.4"
+              }
+            },
+            {
+              "name": "POC_AzureFiles",
+              "properties": {
+                "addressPrefix": "10.20.24.9/32",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.61.4"
+              }
+            },
+            {
+              "name": "LondonFileServer_AzureFiles",
+              "properties": {
+                "addressPrefix": "10.20.24.6/32",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "10.20.61.4"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName2'), '/CiscoMeraki')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName2'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.20.0.0/20",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.61.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/Default')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "0.0.0.0/0",
+          "nextHopType": "Internet"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName2'), '/LondonFileServer_AzureFiles')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName2'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.20.24.6/32",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.61.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName2'), '/MerakiToFW')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName2'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.20.60.0/22",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.61.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/Onprem1')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.100.0.0/16",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/Onprem10')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.16.9.0/24",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/Onprem11')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.16.10.0/24",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/Onprem12')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.16.11.0/24",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/Onprem13')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.16.12.0/24",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/Onprem14')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.16.13.0/24",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/Onprem15')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.16.14.0/24",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/Onprem16')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.24.2.0/24",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/Onprem17')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.24.53.0/24",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/Onprem18')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.24.54.0/24",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/Onprem19')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.128.0.0/9",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/Onprem2')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.16.1.0/24",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/OnPrem20')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.64.0.0/10",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/OnPrem21')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.32.0.0/11",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/OnPrem22')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.24.0.0/13",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/OnPrem23')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.22.0.0/15",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/OnPrem24')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.16.0.0/14",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/OnPrem25')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.0.0.0/12",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/Onprem3')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.16.4.0/24",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/Onprem4')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.16.2.0/24",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/Onprem5')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.16.3.0/24",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/Onprem6')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.16.5.0/24",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/Onprem7')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.16.6.0/24",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/Onprem8')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.16.7.0/24",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName1'), '/Onprem9')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName1'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.16.8.0/24",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.60.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName2'), '/POC_AzureFiles')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName2'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.20.24.9/32",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.61.4"
+        }
+      },
+      {
+        "type": "Microsoft.Network/routeTables/routes",
+        "apiVersion": "2020-05-01",
+        "name": "[concat(parameters('UDRName2'), '/ProdVnet')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/routeTables', parameters('UDRName2'))]"
+        ],
+        "properties": {
+          "addressPrefix": "10.20.16.0/20",
+          "nextHopType": "VirtualAppliance",
+          "nextHopIpAddress": "10.20.61.4"
+        }
+      }
+    ]
+  }

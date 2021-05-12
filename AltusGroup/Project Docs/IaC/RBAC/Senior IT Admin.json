@@ -1,0 +1,21 @@
+{
+    "properties": {
+        "roleName": "Senior IT Admin",
+        "description": "Owner access for Senior IT Admins",
+        "assignableScopes": [
+            "/providers/Microsoft.Management/managementGroups/Monitoring"
+            ],
+        "permissions": [
+            {
+                "actions": [
+                    "*"
+                    ],
+                "notActions": [
+                    
+                ],
+                "dataActions": [],
+                "notDataActions": []
+            }
+        ]
+    }
+}

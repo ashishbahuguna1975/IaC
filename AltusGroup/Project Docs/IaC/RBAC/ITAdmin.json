@@ -1,0 +1,23 @@
+{
+    "properties": {
+        "roleName": "IT Admin",
+        "description": "Contributor access for IT Admins",
+        "assignableScopes": [
+            "/providers/Microsoft.Management/managementGroups/Monitoring"
+            ],
+        "permissions": [
+            {
+                "actions": [
+                    "*"
+                    ],
+                "notActions": [
+                    "Microsoft.Authorization/*/Delete",
+                    "Microsoft.Authorization/*/Write",
+                    "Microsoft.Authorization/elevateAccess/Action"
+                ],
+                "dataActions": [],
+                "notDataActions": []
+            }
+        ]
+    }
+}
